@@ -60,7 +60,7 @@ vector <float> vec_multiply(vector<float> vect_a, vector<float> vect_b)
         {
             x.push_back(vect_a[i]*vect_b[j]);
             y.push_back(a_deg+1-i + b_deg+1-j);
-
+            //do dokonczenia
         }
     }
     for (int i = 0; i < x.size(); i++)
