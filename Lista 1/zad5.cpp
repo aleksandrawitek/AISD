@@ -31,10 +31,12 @@ int save_file (string file_path, vector<float> vec)
     for (int i = 0; i < vec.size(); i++)
     {
         c_file << vec[i];
+        c_file << " ";
     }
     c_file.close();
     return 0;
 }
+
 vector <float> vec_multiply(vector<float> vect_a, vector<float> vect_b)
 {
     vector<float> vect_c;
@@ -52,20 +54,30 @@ vector <float> vec_multiply(vector<float> vect_a, vector<float> vect_b)
     vect_c.push_back(c_deg);
 
     vector<float> x;
-    vector<float> y;
 
-    for(int i=1;i<vect_a.size();i++)
+    int i,j;
+
+    //pomocniczo
+
+    while (i<=c_deg)
     {
-        for (int j=1; j < vect_b.size(); j++)
+        x.push_back(0);
+        i++;
+    }
+
+    //wykluczamy 0 bo to stopien wielomianu
+
+    for(i=1;i<vect_a.size();i++)
+    {
+        for (j=1; j < vect_b.size(); j++)
         {
-            x.push_back(vect_a[i]*vect_b[j]);
-            y.push_back(a_deg+1-i + b_deg+1-j);
-            //do dokonczenia
+            x[i+j-2] += vect_a[i]*vect_b[j];
         }
     }
-    for (int i = 0; i < x.size(); i++)
+
+    for(i = 0; i < x.size(); i++)
     {
-        cout << y[i] << x[i] << endl;
+        vect_c.push_back(x[i]);
     }
 
 
