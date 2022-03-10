@@ -50,14 +50,18 @@ int main()
         array[i] = i + 1;
     }
 
+    //wygenerowanie szukanego x
+
+    int x = rand() % k + 1; 
+
     //pomieszane elementy tablicy
     //https://www.cplusplus.com/reference/algorithm/random_shuffle/
-    //oraz wygenerowanie szukanego x
 
     for (int i = 0; i < n; i++)
     {
+        
         random_shuffle(array, array + k);
-        int x = rand() % k + 1; 
+        //int x = rand() % k + 1; 
         int searched = find(array, k , x);
         repeats[i] = searched;
     }
