@@ -15,6 +15,8 @@ int search_binary(int array[],int n, int value)
 
     int finish = n-1;
 
+    int porownanie = 1;
+
     //wykonuj jesli indeks z lewej strony jest mniejszy rowny indeksowi z prawej
 
     while (start <= finish)
@@ -26,8 +28,8 @@ int search_binary(int array[],int n, int value)
             // jesli srodkowy wyraz jest rowny wartosci szukanej to znalezlismy nasze rozwiazanie
 
             if (array[middle] == value)
-            {
-                return middle;
+            {    
+                return porownanie;
             }
 
             // jesli wyraz srodkowy jest wiekszy od szukanej liczby to musimy wybrac zakres o od poczatku do wyrazu przed 
@@ -44,6 +46,9 @@ int search_binary(int array[],int n, int value)
             {
                 start = middle + 1;
             }
+
+            porownanie += 1;
+            //cout << porownanie << endl;
         }
 
     // zwracamy -1 w przypadku kiedy sprawdzilismy wszystkie mozliwosci a nie wyszukano szukanej liczby
@@ -123,7 +128,7 @@ int main()
     else
     {
         cout << "Znaleziono liczbę 8 a jej indeks to " << searched3  << endl;
-    }
+    } 
     
 
     return 0;
