@@ -14,10 +14,14 @@ int find (int array[], int n, int value)
     {
         if (array[i] == value)
         {
-            return i;
+            //ilosc powtorzen ze wzgledu na indeksowanie od 0
+
+            return i+1;
         }
     }
     
+    // w naszej wersji nie powinna sie taka sytuacja wydarzyc 
+
     return -1;
 }
 
@@ -26,52 +30,49 @@ int main()
 {
     srand (time(NULL));
 
-    int n;
-    cout << "Proszę podać n z zakresu od 1 do 20" << endl;
-    cin >> n;
+    // test dla stu tablic 
 
-    // inicjalizacja tablicy
+    int n = 100;
 
-    int array[n];
+    // pomocnicza tablica trzymajaca ilosc powtorzen
 
-    for (int i = 0; i < n ; i++)
+    int repeats[n];
+
+    //przykladowa wielkosc generowanych tablic
+
+    int k = 20;
+    // inicjalizacja wlasciwej tablicy
+    int array[k];
+
+    for (int i = 0; i < k ; i++)
     {
         // indeksujemy w tablicy od 0 natomiast wartości mamy od 1... n (indeksy od 0 do n-1)
-
         array[i] = i + 1;
     }
 
     //pomieszane elementy tablicy
     //https://www.cplusplus.com/reference/algorithm/random_shuffle/
+    //oraz wygenerowanie szukanego x
 
-    random_shuffle(array, array + n);
-
-    // szukanie czy dana liczba jest w tablicy
-
-    int value;
-    cout << "Jaką liczbę chcesz wyszukać? " << endl;
-    cin >> value; 
-
-    int searched =  find(array, n, value);
-
-    if (searched == -1)
+    for (int i = 0; i < n; i++)
     {
-        cout << "Nie znaleziono liczby " << value << " w podanej tablicy" << endl;
-    }
-    else
-    {
-        cout << "Znaleziono liczbę " << value << " a jej indeks to " << searched  << endl;
+        random_shuffle(array, array + k);
+        int x = rand() % k + 1; 
+        int searched = find(array, k , x);
+        repeats[i] = searched;
     }
 
 
     // obliczanie sredniej 
 
-    int sum = 0;
-    float avg;
+    double sum = 0;
+    double avg;
+
+    cout << "Dla tablicy o rozmiarze " << k << " oraz " << n << " wykonanych prob: " << endl;
 
     for (int i = 0; i < n ; i++)
     {
-        sum += array[i];    
+        sum += repeats[i];    
     }
 
     avg = sum/n;
@@ -80,14 +81,14 @@ int main()
 
     // obliczanie wariancji
 
-    int sum2 = 0;
+    double sum2 = 0;
 
     for (int i = 0; i < n ; i++)
     {
-        sum2 += pow((array[i]-avg),2);    
+        sum2 += pow((repeats[i]-avg),2);    
     }
 
-    float var = sqrt(sum2/n);
+    double var = sqrt(sum2/n);
 
     cout << "Wariancja wynosi " << var << endl;
 
