@@ -74,22 +74,22 @@ int main()
 
     // szukana liczba
 
-    int x;
+    int value;
     cout << "Jaką liczbę chcesz wyszukać? " << endl;
-    cin >> x;
+    cin >> value;
 
     // jesli zwrocone zostanie -1 z funkcji to oznacza, ze liczba nie zostala znaleziona -> nie znajduje sie w tablicy
     // kazda inna liczba od -1 oznacza numer indeksu, na ktorym znajduje sie szukana liczba x 
 
-    int searched =  search_binary(array, n, x);
+    int searched =  search_binary(array, n, value);
 
     if (searched == -1)
     {
-        cout << "Nie znaleziono liczby " << x << " w podanej tablicy" << endl;
+        cout << "Nie znaleziono liczby " << value << " w podanej tablicy" << endl;
     }
     else
     {
-        cout << "Znaleziono liczbę " << x << " a jej indeks to " << searched  << endl;
+        cout << "Znaleziono liczbę " << value << " a jej indeks to " << searched  << endl;
     }
 
     //w ramach przetestowania programu
