@@ -126,7 +126,7 @@ int main()
 {
     srand (time(NULL));
 
-    // stworzenie nowej testowej listy
+    // stworzenie nowych list
     lnode *L = new lnode;
 
 
