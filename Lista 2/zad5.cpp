@@ -8,31 +8,31 @@ using namespace std;
 
 // struktura elementu listy na dane i wskaźnik do kolejnego elementu
 
-struct node
+struct lnode
 { 
     int element;
 
     // wskaznik na nastepny element
-    node *next;
+    lnode *next;
 
     // konstruktor
-    node();
+    lnode();
 };
 
 // konstruktor
 
-node::node() 
+lnode::lnode() 
 {
     next = nullptr;
 }
 
 //dodawanie elementu z przodu listy
-void add(node * & first, int new_element)
+void add(lnode * & L, int new_element)
 {
-    node * x;
+    lnode * x;
     //tworzenie nowego elemetu
 
-    x = new node;
+    x = new lnode;
     //inicjalizacja
     //adres nowego elementu	
 
@@ -42,11 +42,11 @@ void add(node * & first, int new_element)
     //następnikiem będzie bieżący pierwszy element listy
     //ustawiamy początek listy na nowy element
 
-    x->next = first;
-    first = x;
+    x->next = L;
+    L = x;
 } 
 
-void display(node *x)
+void display(lnode *x)
 {
     
     // przewijamy wskazniki na nastepne elementy
@@ -69,9 +69,9 @@ void display(node *x)
 
 //funkcja remove do usuniecia stale pojawiajacego sie 0 na poczatku
 
-void remove(node *x, int element_remove)
+void remove(lnode *x, int element_remove)
 {
-	node *y = x;
+	lnode *y = x;
    	while (y->next != nullptr)
    	{
         // musimy mieć wskaźnik do elementu poprzedzającego
@@ -80,7 +80,7 @@ void remove(node *x, int element_remove)
 		{
             // zapamiętujemy usuwany element
 
-			node *removed=y->next;
+			lnode *removed=y->next;
 
             // przestawiamy wskaźnik next by omijał usuwany element
 
@@ -97,15 +97,15 @@ void remove(node *x, int element_remove)
     }
 }
 
-void reverse (node * & first)
+void reverse (lnode * & L)
 {
-  node * x, * y;
+  lnode * x, * y;
 
   // zapamiętujemy adres pierwszego elementu
 
-  if(first)
+  if(L)
   {
-    x = first;
+    x = L;
 
     // dopóki istnieje następnik zapamiętanego element zapamiętujemy adres następnika
     // wyjmujemy następnik z listy i wstawiamy go na jej początek
@@ -114,8 +114,8 @@ void reverse (node * & first)
     {
       y = x->next;
       x->next = y->next;
-      y->next = first;
-      first = y;
+      y->next = L;
+      L = y;
     }
   }
 }
@@ -127,7 +127,7 @@ int main()
     srand (time(NULL));
 
     // stworzenie nowej testowej listy
-    node *L = new node;
+    lnode *L = new lnode;
 
 
 	// dodanie elementow do listy o rozmiarze np 20
