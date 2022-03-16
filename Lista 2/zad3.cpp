@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <time.h>
+#include <math.h>
 
 
 using namespace std;
@@ -13,17 +14,20 @@ double scalar(vector <double> a, vector <double> b)
     // pomocnicza zmienna
 
     double scalar_result = 0;
+    int i = 0;
 
     // warunek na iloczyn skalarny, wektory takich samych wielkosci
     // ilosc mnozen -> n (rozmiar wektora)
 
     if (a.size() == b.size())
     {
-        for(int i = 0; i < a.size(); i++)
+        for(i = 0; i < a.size(); i++)
         {
             scalar_result += (a[i]*b[i]);
         }
+        //cout << "Ilość wykonanych mnozen " << i << endl;
     }
+
 
     else
     {
@@ -62,6 +66,7 @@ vector <double> vec_multiply(vector<double> vect_a, vector<double> vect_b, int n
     cout << "Stopień wielomianu C(x) = A(x)B(x): " << 2*n << endl;
 
     int i,j;
+    int k = 0;
 
     for (i = 0; i< 2*n +1; i++)
     {
@@ -73,11 +78,11 @@ vector <double> vec_multiply(vector<double> vect_a, vector<double> vect_b, int n
         for (j=0; j < n+1; j++)
         {
             vect_c[i+j] += vect_a[i]*vect_b[j];
+            k++;
         }
+        k++;
     }
-
     return vect_c;
-
 }
 
 
@@ -86,11 +91,15 @@ int main()
 {
     // podpunkt a
 
+    cout << "Podpunkt a " << endl;
+    cout << endl;
+
     // wektor a,b
 
     vector <double> a,b;
 
     int n = 20;
+    cout << "Wielkość wektorow (n): " << n << endl;
 
     //inicjalizacja pustego wektora
 
@@ -131,10 +140,15 @@ int main()
     cout << endl;
     cout << "Iloczyn skalarny: ";
     cout << scalar(a,b) << endl;
+    cout << endl;
 
     // podpunt b
 
     // stopien wielomianu
+
+    cout << "Podpunkt b " << endl;
+    cout << endl;
+
 
     int m = 4;
 
@@ -172,9 +186,14 @@ int main()
 
     cout << "Wartość wielomianu dla x: " << horner(coeff, m, x) << endl;
 
+    cout << endl;
+
     // podpunkt c
 
     // stopien wielomianow
+
+    cout << "Podpunkt c " << endl;
+    cout << endl;
 
     int o = 4;
 
@@ -233,10 +252,100 @@ int main()
     }
 
     cout << endl;
+    cout << endl;
 
+    // podpunkt d
 
+    cout << "Podpunkt d " << endl;
+    cout << endl;
 
+    // inicjalizacja macierzy o rozmiarze p
 
+    int p = 3;
+
+    double matrix_a[p][p];
+    double matrix_b[p][p];
+    double matrix_c[p][p];
+
+    for(int i = 0; i < p; i++)
+    {
+        for(int j = 0; j < p; j++)
+        { 
+            matrix_a[i][j] = rand() % 20 + 1;
+        }
+    }
+
+    for(int i = 0; i < p; i++)
+    {
+        for(int j = 0; j < p; j++)
+        { 
+            matrix_b[i][j] = rand() % 20 + 1;
+        }
+    }
+
+    // wyswietlenie macierzy
+
+    cout << "Macierz a: " << endl;
+
+    for(int i = 0; i < p; i++)
+    {
+        for(int j = 0; j < p; j++)
+        { 
+            cout << matrix_a[i][j] << " ";
+        }
+        cout << endl;
+    }
+
+    cout << endl;
+
+    cout << "Macierz b: " << endl;
+    
+    for(int i = 0; i < p; i++)
+    {
+        for(int j = 0; j < p; j++)
+        { 
+            cout << matrix_b[i][j] << " ";
+        }
+        cout << endl;
+    }
+
+    cout << endl;
+
+    // mnozenie macierzy nxn
+    // https://www.naukowiec.org/wiedza/matematyka/mnozenie-macierzy_604.html
+    // 𝑐𝑖𝑗=𝑎𝑖1𝑏1𝑗+𝑎𝑖2𝑏2𝑗+...+𝑎𝑖𝑝𝑏𝑝𝑗 =∑𝑘=1𝑝𝑎𝑖𝑘𝑏𝑘𝑗
+
+    for(int i = 0; i < p; i++)
+    {
+        for(int j = 0; j < p; j++)
+        {
+            int s = 0;
+            for(int k = 0; k < p; k++ )
+            {
+                s += matrix_a[i][k]*matrix_b[k][j];
+            }
+            matrix_c[i][j] = s;
+        }
+    }
+
+    cout << "Macierz c (wynik mnozenia macierzy a i b): " << endl;
+    
+    for(int i = 0; i < p; i++)
+    {
+        for(int j = 0; j < p; j++)
+        { 
+            cout << matrix_c[i][j] << " ";
+        }
+        cout << endl;
+    }
+
+    cout << endl;
+
+    // https://www.matmana6.pl/obliczanie-wartosci-wyznacznika-metoda-laplacea
+    // wyznacznik macierzy metoda La Place'a
+
+    cout << "Podpunkt e" << endl;
+    cout << endl;
 
 
     return 0;
