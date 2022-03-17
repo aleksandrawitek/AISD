@@ -16,15 +16,10 @@ struct lnode
     lnode *next;
 
     // konstruktor
-    lnode();
+    lnode(int element0, lnode* next0=nullptr):element(element0),next(next0){};
+
 };
 
-// konstruktor
-
-lnode::lnode() 
-{
-    next = nullptr;
-}
 
 //dodawanie elementu z przodu listy
 void add(lnode * & L, int new_element)
@@ -32,7 +27,8 @@ void add(lnode * & L, int new_element)
     lnode * x;
     //tworzenie nowego elemetu
 
-    x = new lnode;
+    x = new lnode(0,0);
+
     //inicjalizacja
     //adres nowego elementu	
 
@@ -127,7 +123,7 @@ int main()
     srand (time(NULL));
 
     // stworzenie nowych list
-    lnode *L = new lnode;
+    lnode *L = new lnode(0,0);
 
 
 	// dodanie elementow do listy o rozmiarze np 20
