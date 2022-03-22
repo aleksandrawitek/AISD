@@ -26,7 +26,40 @@ void add(lnode * & L, int new_element)
 
     x->next = L;
     L = x;
-} 
+}
+void insert_after_smaller(lnode * & L, int new_element)
+{
+    //dodaj element aby wydluzyc liste
+
+    add(L, 0);
+
+    lnode * x;
+    int i = 0;
+
+    // zapamiętujemy adres pierwszego elementu
+    if(L)
+    {
+        x = L;
+
+        //podmiana wartosci dopoki nie wieksze
+
+        while(x->next)
+        {
+            if(x->next->element<=new_element)
+            {
+                x -> element = x -> next -> element;
+                x = x->next;
+                i++;
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+    x -> element = new_element;
+}
+
 
 void display(lnode *x)
 {
@@ -127,21 +160,21 @@ lnode* merge(lnode* L1, lnode* L2)
     lnode *x;
     result = nullptr;
 
-    while (L1) //n
+    while (L1)
     {
         // dodaj wszystkie elementy z L1 na poczatek
         add(result,L1-> element);
         L1=L1->next;
     }
-    while (L2) //m
+    while (L2)
     {
         // dodaj wszystkie elementy z L2 na poczatek
-        add(result,L2-> element);
+        insert_after_smaller(result,L2-> element);
         L2=L2->next;
     }
     int i = 0;
     int new_element = 0;
-    sort(result);
+    //sort(result);
 
     return result;
     
