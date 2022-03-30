@@ -62,29 +62,6 @@ void display(lnode *x)
     }
 }
 
-void reverse (lnode * & L)
-{
-  lnode * x, * y;
-
-  // zapamiętujemy adres pierwszego elementu
-
-  if(L)
-  {
-    x = L;
-
-    // dopóki istnieje następnik zapamiętanego element zapamiętujemy adres następnika
-    // wyjmujemy następnik z listy i wstawiamy go na jej początek
-    
-    while(x->next)
-    {
-      y = x->next;
-      x->next = y->next;
-      y->next = L;
-      L = y;
-    }
-  }
-}
-
  void insertion_sort(lnode *&L)
 {
 
