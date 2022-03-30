@@ -62,6 +62,29 @@ void display(lnode *x)
     }
 }
 
+void reverse (lnode * & L)
+{
+  lnode * x, * y;
+
+  // zapamiętujemy adres pierwszego elementu
+
+  if(L)
+  {
+    x = L;
+
+    // dopóki istnieje następnik zapamiętanego element zapamiętujemy adres następnika
+    // wyjmujemy następnik z listy i wstawiamy go na jej początek
+    
+    while(x->next)
+    {
+      y = x->next;
+      x->next = y->next;
+      y->next = L;
+      L = y;
+    }
+  }
+}
+
  void insertion_sort(lnode *&L)
 {
 
@@ -82,6 +105,7 @@ void display(lnode *x)
 
         while (unsorted)
         {
+
             // pomocnicza zmienna z aktualnego unsorted
 
             lnode* value = unsorted;
@@ -94,13 +118,10 @@ void display(lnode *x)
 
             if (!sorted || value->element <= sorted->element) 
             {
-                // ustalenie nieposortowanego klucza na klucz listy value
+                // dodanie elemetu na poczatek posortowanej listy
 
-                value->next = sorted;
+                add(sorted,value->element);
 
-                // zapis miejsca w liscie
-
-                sorted = value;
             } 
             else
             {
@@ -122,7 +143,7 @@ void display(lnode *x)
 
                         // zamiana miejsc
 
-                        check->next = value; 
+                        check->next = value;
 
                         // przypisanie do obecnego sorta = listy value
                         // unikniecie zapętlenia
@@ -141,6 +162,7 @@ void display(lnode *x)
 
         L = sorted;
     }
+
 }
 
 
@@ -187,7 +209,5 @@ int main()
     display(L2);
     cout << endl;
     
-
-
     return 0;
 }
