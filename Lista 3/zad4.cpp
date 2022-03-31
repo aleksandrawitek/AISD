@@ -40,7 +40,28 @@ void add(lnode * & L, int new_element)
     x->next = L;
     L = x;
 }
+void reverse (lnode * & L)
+{
+  lnode * x, * y;
 
+  // zapamiętujemy adres pierwszego elementu
+
+  if(L)
+  {
+    x = L;
+
+    // dopóki istnieje następnik zapamiętanego element zapamiętujemy adres następnika
+    // wyjmujemy następnik z listy i wstawiamy go na jej początek
+    
+    while(x->next)
+    {
+      y = x->next;
+      x->next = y->next;
+      y->next = L;
+      L = y;
+    }
+  }
+}
 void display(lnode *x)
 {
     
@@ -93,16 +114,16 @@ void display(lnode *x)
 
             // jesli lista jest pusta albo wartosc nieposortowanej jest mniejsza od klucza z posortowanej
 
-            if (!sorted || value->element <= sorted->element) 
+            if (!sorted || value->element >= sorted->element) 
             {
                 // dodanie elemetu na poczatek posortowanej listy
-
-                add(sorted,value->element);
+                value->next = sorted;
+                sorted = value;
 
             } 
             else
             {
-                // pomocniczna zmienna do porownywania liczb -> rosnie wielkosc listy
+                // pomocniczna zmienna do porownywania liczb
 
                 lnode* check = sorted;
 
@@ -112,32 +133,34 @@ void display(lnode *x)
                 {
                     // jesli nastepny klucz obecnej zmiennej nie jest null albo liczba z value jest mniejsza od nastepnego checka
 
-                    if (!check->next || value->element < check->next->element)
+                    if (!check->next || value->element > check->next->element)
                     {
-                        // przypisanie do nastepnego value obecnego sorta
+                        // przypisanie do nastepnego value porownywanego checka
 
                         value->next = check->next;
 
                         // zamiana miejsc
+                        // przypisanie do porownywanego checka = listy value
+
 
                         check->next = value;
 
-                        // przypisanie do obecnego sorta = listy value
                         // unikniecie zapętlenia
 
                         break; 
                     }
 
                     // przypisujemy check na nastepne miejsce
-
                     check = check->next;
                 }
+    
             }
             display(sorted);
         }
         // nadpisanie listy na posortowaną
 
         L = sorted;
+        reverse(L);
     }
 
 }
