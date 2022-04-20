@@ -1,0 +1,167 @@
+<html>
+</head>
+<style>
+    div> p {width:auto; float:left;margin:5px;padding:5px;border:1px solid grey;margin-bottom:20px}
+    div.kopiec> p {position:absolute} 
+    b {position:absolute;transform:translate(-15px,30px)}
+</style>
+</head>
+<body>
+  <button>Pokaż Kopiec</button>
+  <button>Pokaż Indeksy</button>
+  <button>Sortuj</button>
+  <button>Od nowa</button>
+  <h1>Heap Sort</h1>
+    <strong>Lewy_(i)=2i+1</strong><br>
+    <strong>Prawy_(i)=2i+2</strong><br>
+    <strong>Ojciec(i)=(i-1)/2</strong><br><br>
+    <div id=kopiec></div> 
+  </div>
+</body>
+
+<script>
+    
+let N=30;
+let div=document.querySelector("div");
+for(let i=0;i<N;i++)
+    div.innerHTML+="<p><span>"+parseInt(Math.random()*100)+"</span><b></b></p>";
+let p=document.querySelectorAll("p");
+let t=document.querySelectorAll("p>span");
+let button=document.querySelectorAll("button")
+var clock;
+
+button[0].onclick=function(){
+      div.className=div.className ? "" : "kopiec"
+    };
+button[1].onclick=indeksy;
+button[2].onclick=sortuj;
+button[3].onclick=liczby;
+
+function indeksy()
+{
+  let b=document.querySelectorAll("p>b");
+  let i=0;
+  if(b[0].innerHTML=='')
+    for(let x of b)
+    {
+      
+      if(b[2*i+1])
+        b[2*i+1].title="2*"+i+"+1";
+      if(b[2*i+2])  
+        b[2*i+2].title="2*"+i+"+2";
+      x.innerHTML= i++;
+    }
+  else
+    for(let x of b)
+      x.innerHTML= '';
+};
+
+
+function liczby()
+{ 
+  for(let x of t)
+  {
+    x.innerHTML=parseInt(Math.random()*100);
+    delete x.value;
+    x.parentNode.style.background='';
+  }
+  clearInterval(clock);
+}
+
+function pozycje(i,top,left,offset)
+{
+  if(i<N)
+  {
+    t[i].parentNode.style.top=top*55+'px';
+    t[i].parentNode.style.left=left+'%';
+    pozycje(2*i+1,top+1,left-offset,offset/2);
+    pozycje(2*i+2,top+1,left+offset,offset/2);
+  }
+}
+
+pozycje(0,2,50,20);
+
+function* przesiej (i, n)
+    {
+      let k=i;
+      while (true)
+        {
+          k = 2 * i + 2;
+          if(k<n)
+            p[k].style.background='yellow';
+          if(k-1<n)
+            p[k-1].style.background='yellow';
+          yield 1;
+          if(k<n)
+            p[k].style.background='';
+          if(k-1<n)
+            p[k-1].style.background='';
+          if (( (k < n) && (+t[k].innerHTML > +t[k - 1].innerHTML) || (--k < n) ) && +t[k].innerHTML > +t[i].innerHTML)
+          {
+            p[k].style.background='yellow';
+            p[i].style.background='yellow';
+            yield 1;
+            p[k].style.background='pink';
+            p[i].style.background='pink';
+            yield 1;
+            let x = t[k].innerHTML;
+            t[k].innerHTML = t[i].innerHTML;
+            t[i].innerHTML = x;
+            p[k].style.background='';
+            p[i].style.background='';
+            i = k;            
+            
+          }
+          else
+          { if(k<n)
+            {
+              p[k].style.background='yellow';
+              p[i].style.background='yellow';
+              yield 1;
+              p[k].style.background='';
+              p[i].style.background='';    
+            }
+            return 1;
+          }
+        }
+    }
+        
+    
+function* heap_sort(n)
+{
+    
+    // Budowanie kopca
+    for (let i = Math.floor(n / 2)-1; i >= 0; i--)
+        yield* przesiej (i, n);
+    // Opróżnianie kopca
+    for(let i = n - 1; i > 0; i--)
+    {   
+        p[i].style.background="pink";   
+        p[0].style.background="pink";
+        yield 1;   
+        p[0].style.background="";
+        p[i].style.background="lightgreen";
+        let x = t[i].innerHTML; 
+        t[i].innerHTML = t[0].innerHTML; 
+        t[0].innerHTML = x; 
+        yield* przesiej (0, i);
+    }
+    p[0].style.background="lightgreen";
+}
+    
+
+
+
+document.querySelector("h1").onclick=sortuj;
+
+
+function sortuj(){
+  clearInterval(clock);
+  for(let x of t)
+    x.style.background='';
+  let a=heap_sort(N);
+  clock=setInterval(()=>{if(a.next().done) clearInterval(clock)},1000);
+}
+
+</script>
+</html>
